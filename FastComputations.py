@@ -88,5 +88,32 @@ def prepare():
         scipy.sparse.save_npz(template_red.format(n_copies), rho)
         print('Done for {} copies'.format(n_copies))
 
+def diagonalize():
+    template_load_green = 'Data/Matrix_green_copies{}.npz'
+    template_load_red = 'Data/Matrix_lowerred_copies{}.npz'
+    template_save_green = 'Data/Eigenvalues_green_copies{}.txt'
+    template_save_red = 'Data/Eigenvalues_lowerred_copies{}.txt'
+    for n_copies in range(2,8):
+        rho = scipy.sparse.load_npz(template_load_green.format(n_copies))
+        eigvals = find_eigenvalues(rho)
+        string = ','.join(['{:f}'.format(x) for x in eigvals])
+        with open(template_save_green.format(n_copies), 'w') as f:
+            f.write(string)
+        del rho, eigvals
+        gc.collect()
+        print('Done green line for {} copies'.format(n_copies))
+
+        rho = scipy.sparse.load_npz(template_load_red.format(n_copies))
+        eigvals = find_eigenvalues(rho)
+        string = ','.join(['{:f}'.format(x) for x in eigvals])
+        with open(template_save_red.format(n_copies), 'w') as f:
+            f.write(string)
+        del rho, eigvals
+        gc.collect()
+        print('Done red line for {} copies'.format(n_copies))
+
+
+
 if __name__=='__main__':
-    prepare()
+    # prepare()
+    diagonalize()
