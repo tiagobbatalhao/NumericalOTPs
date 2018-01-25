@@ -2,6 +2,7 @@ import ImplementationOTPs as implement_module
 import scipy.sparse.linalg
 import gc
 import pylab as py
+import time
 
 def green_line_prepare(n_copies):
     template = 'Data/PauliAggregate_gate{}_copies{}.txt'
@@ -88,21 +89,27 @@ def prepare():
         scipy.sparse.save_npz(template_red.format(n_copies), rho)
         print('Done for {} copies'.format(n_copies))
 
+def find_norm(sparse_matrix):
+    return py.norm(sparse_matrix.toarray(), ord='nuc')
+
 def diagonalize():
     template_load_green = 'Data/Matrix_green_copies{}.npz'
     template_load_red = 'Data/Matrix_lowerred_copies{}.npz'
     template_save_green = 'Data/Eigenvalues_green_copies{}.txt'
     template_save_red = 'Data/Eigenvalues_lowerred_copies{}.txt'
     for n_copies in range(2,8):
+        t0 = time.time()
         rho = scipy.sparse.load_npz(template_load_green.format(n_copies))
         eigvals = find_eigenvalues(rho)
+#        eigvals = [find_norm(rho)]
         string = ','.join(['{:f}'.format(x) for x in eigvals])
         with open(template_save_green.format(n_copies), 'w') as f:
             f.write(string)
         del rho, eigvals
         gc.collect()
-        print('Done green line for {} copies'.format(n_copies))
+        print('Done green line for {} copies in {:.3f} seconds.'.format(n_copies,time.time()-t0))
 
+        t0 = time.time()
         rho = scipy.sparse.load_npz(template_load_red.format(n_copies))
         eigvals = find_eigenvalues(rho)
         string = ','.join(['{:f}'.format(x) for x in eigvals])
@@ -110,7 +117,7 @@ def diagonalize():
             f.write(string)
         del rho, eigvals
         gc.collect()
-        print('Done red line for {} copies'.format(n_copies))
+        print('Done red line for {} copies in {:.3f}'.format(n_copies,time.time()-t0))
 
 
 
