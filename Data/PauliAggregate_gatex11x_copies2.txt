@@ -1,0 +1,11 @@
+iiii 4.0
+iiyi -2.0
+iizx -2.0
+xixi 1.0
+yiii -2.0
+yiyi 1.0
+yizx 1.0
+zxii -2.0
+zxyi 1.0
+zxzx 1.0
+zyzy 1.0
