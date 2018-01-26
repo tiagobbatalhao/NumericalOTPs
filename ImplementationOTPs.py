@@ -134,14 +134,43 @@ sparse_matrices[sigmas[2]] = scipy.sparse.csr_matrix(
     py.array([[0j,1,0,0],[1,0,0,0],[0,0,0,-1],[0,0,-1,0]]))
 sparse_matrices[sigmas[3]] = scipy.sparse.csr_matrix(
     py.array([[0j,-1j,0,0],[1j,0,0,0],[0,0,0,1j],[0,0,-1j,0]]))
-
-
-
-
 # sigmas = ['xi', 'yi', 'zx', 'zy']
 
 
+sparse_matrices['ii'] = scipy.sparse.csr_matrix(
+    py.array([[1,0j,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]))
+sparse_matrices['iz'] = scipy.sparse.csr_matrix(
+    py.array([[1,0j,0,0],[0,-1,0,0],[0,0,1,0],[0,0,0,-1]]))
+sparse_matrices['ix'] = scipy.sparse.csr_matrix(
+    py.array([[0j,1,0,0],[1,0,0,0],[0,0,0,1],[0,0,1,0]]))
+sparse_matrices['iy'] = scipy.sparse.csr_matrix(
+    py.array([[0j,-1j,0,0],[1j,0,0,0],[0,0,0,-1j],[0,0,1,0]]))
+sparse_matrices['zi'] = scipy.sparse.csr_matrix(
+    py.array([[1,0j,0,0],[0,1,0,0],[0,0,-1,0],[0,0,0,-1]]))
+sparse_matrices['zz'] = scipy.sparse.csr_matrix(
+    py.array([[1,0j,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]]))
+sparse_matrices['zx'] = scipy.sparse.csr_matrix(
+    py.array([[0j,1,0,0],[1,0,0,0],[0,0,0,-1],[0,0,-1,0]]))
+sparse_matrices['zy'] = scipy.sparse.csr_matrix(
+    py.array([[0j,-1j,0,0],[1j,0,0,0],[0,0,0,1j],[0,0,-1j,0]]))
 
+sparse_matrices['xi'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,1,0],[0,0,0,1],[1,0,0,0],[0,1,0,0]]))
+sparse_matrices['iz'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,1,0],[0,0,0,-1],[1,0,0,0],[0,-1,0,0]]))
+sparse_matrices['xx'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,0,1],[0,0,1,0],[0,1,0,0],[1,0,0,0]]))
+sparse_matrices['xy'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,0,-1j],[0,0,1j,0],[0,-1j,0,0],[1j,0,0,0]]))
+
+sparse_matrices['yi'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,-1j,0],[0,0,0,-1j],[1j,0,0,0],[0,1j,0,0]]))
+sparse_matrices['yz'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,-1j,0],[0,0,0,1j],[1j,0,0,0],[0,-1j,0,0]]))
+sparse_matrices['yx'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,0,-1j],[0,0,-1j,0],[0,1j,0,0],[1j,0,0,0]]))
+sparse_matrices['yy'] = scipy.sparse.csr_matrix(
+    py.array([[0j,0,0,-1],[0,0,1,0],[0,1,0,0],[-1,0,0,0]]))
 
 
 
