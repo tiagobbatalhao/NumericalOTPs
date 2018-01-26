@@ -123,6 +123,15 @@ def sparse_representation_timed(operator):
     else:
         return None
 
+def full_representation(operator):
+    sparse_paulis = [sparse_representation_pauli(x) for x in operator.pauli_matrices]
+    full_matrix = sparse_paulis[0].toarray()
+    for pauli in sparse_paulis[1:]:
+        full_matrix += pauli.toarray()
+    return full_matrix
+
+
+
 sparse_matrices = {}
 sparse_matrices['ii'] = scipy.sparse.csr_matrix(
     py.array([[1,0j,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]))
