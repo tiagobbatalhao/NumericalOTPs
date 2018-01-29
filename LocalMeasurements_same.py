@@ -70,3 +70,56 @@ def main():
 
 if __name__=='__main__':
     main()
+
+import qutip as qp
+def unitary_effects(params):
+    unitary = qp.Qobj(build_candidate_unitary(params,1))
+    sigmas = implement_module.sparse_matrices
+    sigmas = {x: qp.Qobj(y) for x,y in sigmas.items()}
+    transform = {x: unitary*y*unitary.dag() for x,y in sigmas.items()}
+    expansion = {x:{z:qp.expect(w,y) for z,w in sigmas.items()} for x,y in transform.items()}
+    relevant = {}
+    for label in ['xi', 'yi', 'zx', 'zy']:
+        relevant[label] = {x: y for x,y in expansion[label].items() if 'x' not in x and 'y' not in x and abs(y)>1e-3}
+    return relevant
+
+
+import PauliClass
+def candidate_transformation(rho, n_copies):
+    paulis_transform = []
+    for pauli in rho.pauli_matrices:
+        this_label = ''
+        this_prefactor = pauli.prefactor
+        add = True
+        for i in range(n_copies):
+            check = pauli.label[2*i:2*i+2]
+            if check == 'ii':
+                this_label += 'ii'
+            elif check == 'xi':
+                this_label += 'zi'
+                this_prefactor *= +1/py.sqrt(2)
+            elif check == 'yi':
+                this_label += 'zi'
+                this_prefactor *= -1/py.sqrt(2)
+            else:
+                add = False
+                break
+        if add:
+            paulis_transform.append((this_label,this_prefactor))
+    transform = PauliClass.Operator(paulis_transform,2*n_copies)
+    print('Created Paulis')
+    rho_transform = implement_module.full_representation(transform)
+    print('Implemented full representation')
+    sumdiag = sum(abs(py.diag(rho_transform)))
+
+    return sumdiag
+
+
+results = {
+    2: 64. / (2**(3*2+2)),
+    3: 768. / (2**(3*3+2)),
+    4: 6656. / (2**(3*4+2)),
+    5: 61440. / (2**(3*5+2)),
+    6: 593920. / (2**(3*6+2)),
+    7: 0 / (2**(3*7+2)),
+}
